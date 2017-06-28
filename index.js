@@ -48,6 +48,7 @@ function co(gen) {
   // which leads to memory leak errors.
   // see https://github.com/tj/co/issues/180
   return new Promise(function(resolve, reject) {
+//     获得一个 Generator
     if (typeof gen === 'function') gen = gen.apply(ctx, args);
     if (!gen || typeof gen.next !== 'function') return resolve(gen);
 
@@ -58,7 +59,7 @@ function co(gen) {
      * @return {Promise}
      * @api private
      */
-
+//     调用 Generator.next
     function onFulfilled(res) {
       var ret;
       try {
@@ -66,6 +67,7 @@ function co(gen) {
       } catch (e) {
         return reject(e);
       }
+//       递归 next 直至 done
       next(ret);
       return null;
     }
